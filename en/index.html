@@ -259,6 +259,60 @@ button,input,select{font-family:inherit}
   .zn-lang-switch a{min-width:27px;height:24px;padding:0 6px;font-size:10px}
   .zn-auth{display:none}
 }
+
+/* === Collapsible intro under heading: 2 lines when collapsed === */
+.sv-intro-toggle{
+  appearance:none;
+  width:100%;
+  display:flex;
+  align-items:flex-start;
+  gap:5px;
+  margin:0 0 6px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#5f6872;
+  text-align:left;
+  cursor:pointer;
+  font:inherit;
+}
+.sv-intro-copy{
+  min-width:0;
+  max-width:800px;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+}
+.sv-intro-toggle.is-open .sv-intro-copy{
+  display:block;
+  overflow:visible;
+}
+.sv-intro-chevron{
+  flex:0 0 auto;
+  color:var(--zn-blue);
+  font-size:15px;
+  line-height:1.1;
+  transition:transform .15s ease;
+}
+.sv-intro-toggle.is-open .sv-intro-chevron{
+  transform:rotate(180deg);
+}
+.sv-intro-toggle:hover .sv-intro-copy,
+.sv-intro-toggle:focus-visible .sv-intro-copy{
+  color:#45535e;
+}
+.sv-intro-toggle:focus-visible{
+  outline:2px solid rgba(23,134,200,.25);
+  outline-offset:2px;
+}
+@media(max-width:760px){
+  .sv-intro-toggle{
+    font-size:12px;
+    line-height:1.4;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -278,7 +332,10 @@ button,input,select{font-family:inherit}
 <h1>Best Marketing Tools 2026</h1>
 <a aria-label="How to choose a service" class="sv-help" data-tooltip="Below are tips for choosing a service, comparing pricing and checking terms." href="#seo-description">?</a>
 </div>
-<p>A selection of tools for analytics, ad management, audience research, influencer marketing, chatbots and other digital marketing tasks.</p>
+<button class="sv-intro-toggle" type="button" aria-expanded="false" aria-label="Expand description">
+<span class="sv-intro-copy">A selection of tools for analytics, ad management, audience research, influencer marketing, chatbots and other digital marketing tasks.</span>
+<span class="sv-intro-chevron" aria-hidden="true">⌄</span>
+</button>
 <div class="sv-meta"><span><b>70</b> services in this category</span><span>Promo codes and bonuses available</span><span>Data updated by the editorial team</span></div>
 </section>
 <nav aria-label="Service categories" class="sv-root-nav">
@@ -575,5 +632,19 @@ button,input,select{font-family:inherit}
   applyFilter();
 })();
 </script>
+
+<script>
+(function(){
+  var introToggle=document.querySelector('.sv-intro-toggle');
+  if(!introToggle) return;
+
+  introToggle.addEventListener('click',function(){
+    var open=introToggle.classList.toggle('is-open');
+    introToggle.setAttribute('aria-expanded',open?'true':'false');
+    introToggle.setAttribute('aria-label',open?'Collapse description':'Expand description');
+  });
+})();
+</script>
+
 </body>
 </html>
